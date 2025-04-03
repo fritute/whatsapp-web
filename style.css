@@ -11,7 +11,7 @@ body {
     background-color: #f0f2f5;
 }
 
-/* Container principal */
+
 .app-container {
     display: flex;
     height: 100vh;
@@ -21,7 +21,6 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Sidebar */
 .sidebar {
     width: 350px;
     background-color: #128C7E;
@@ -56,109 +55,7 @@ body {
     background-color: #075E54;
 }
 
-/* Área do chat */
-.chat-area {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
 
-.chat-header {
-    padding: 15px;
-    background-color: #f0f2f5;
-    border-bottom: 1px solid #ddd;
-    font-size: 18px;
-    font-weight: 500;
-}
-
-.messages {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background-color: #e5ddd5;
-    background-image: url('https://web.whatsapp.com/img/bg-chat-tile-light_a4be512e7195b6b733d9110b408f075d.png');
-    background-repeat: repeat;
-    display: flex;
-    flex-direction: column;
-}
-
-.message {
-    max-width: 70%;
-    margin-bottom: 15px;
-    padding: 8px 12px;
-    border-radius: 7.5px;
-    position: relative;
-    word-wrap: break-word;
-    animation: fadeIn 0.3s ease;
-}
-
-.message.sent {
-    background-color: #dcf8c6;
-    align-self: flex-end;
-}
-
-.message.received {
-    background-color: #ffffff;
-    align-self: flex-start;
-}
-
-.message-content {
-    font-size: 15px;
-    line-height: 1.4;
-}
-
-.message-time {
-    font-size: 11px;
-    color: #666;
-    text-align: right;
-    margin-top: 4px;
-}
-
-.message-input {
-    padding: 15px;
-    background-color: #f0f0f0;
-    display: flex;
-    gap: 10px;
-    border-top: 1px solid #ddd;
-}
-
-.message-input input {
-    flex: 1;
-    padding: 10px 15px;
-    border-radius: 20px;
-    border: none;
-    outline: none;
-    font-size: 15px;
-}
-
-.message-input button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    background-color: #128C7E;
-    color: white;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s;
-}
-
-.message-input button:hover {
-    background-color: #0c7d6e;
-}
-
-.error {
-    color: #ff4444;
-    padding: 15px;
-    text-align: center;
-}
-
-/* Animações */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-/* Estilos para os contatos */
 .contact-container {
     display: flex;
     align-items: center;
@@ -188,15 +85,33 @@ body {
     margin-top: 2px;
 }
 
-/* Mensagens vazias */
-.empty-message {
-    text-align: center;
-    color: #666;
-    padding: 20px;
-    font-style: italic;
+
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-/* Melhorias nas mensagens */
+.chat-header {
+    padding: 15px;
+    background-color: #f0f2f5;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #e5ddd5;
+    background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Mensagens */
 .message {
     max-width: 70%;
     margin-bottom: 12px;
@@ -229,4 +144,37 @@ body {
     color: #666;
     text-align: right;
     margin-top: 4px;
+}
+
+/* Input de mensagem */
+.message-input {
+    padding: 15px;
+    background-color: #f0f0f0;
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.message-input input {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
+
+.message-input button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #128C7E;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.message-input button:hover {
+    background-color: #0c7d6e;
 }
