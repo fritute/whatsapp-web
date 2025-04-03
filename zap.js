@@ -3,9 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const areaMensagens = document.getElementById('messages')
     const cabecalhoChat = document.getElementById('currentChat')
     
-    const URL_BASE = 'https://giovanna-whatsapp.onrender.com/v1/whatsapp'
-    const MEU_NUMERO = '11987876567'
-    
     function criarElemento(tipo, classe = '') {
         const elemento = document.createElement(tipo)
         if (classe) elemento.className = classe
@@ -14,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function carregarContatos() {
         try {
-            const resposta = await fetch(`${URL_BASE}/contatos/${MEU_NUMERO}`)
+            const resposta = await fetch(`https://giovanna-whatsapp.onrender.com/v1/whatsapp/contatos/11987876567`)
             
             if (!resposta.ok) {
                 throw new Error(`Erro HTTP: ${resposta.status}`)
@@ -28,27 +25,22 @@ document.addEventListener('DOMContentLoaded', function() {
             
             exibirContatos(dados.dados_contato)
         } catch (erro) {
-            const elementoErro = criarElemento('div', 'error')
-            listaConversas.appendChild(elementoErro)
+           return false
         }
     }
     
     function exibirContatos(contatos) {
-        while (listaConversas.firstChild) {
-            listaConversas.removeChild(listaConversas.firstChild)
-        }
+        listaConversas.innerHTML = ''
         
         contatos.forEach(contato => {
             const itemContato = criarElemento('div', 'conversation-item')
             
             const containerContato = criarElemento('div', 'contact-container')
             
-            if (contato.profile) {
-                const imagem = criarElemento('img', 'contact-img')
-                imagem.src = contato.profile
-                imagem.alt = contato.name
-                containerContato.appendChild(imagem)
-            }
+            const imagem = criarElemento('img', 'contact-img')
+            imagem.src = contato.profile || 'https://via.placeholder.com/40'
+            imagem.alt = contato.name
+            containerContato.appendChild(imagem)
             
             const containerTexto = criarElemento('div', 'contact-text')
             
@@ -56,11 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
             nomeContato.textContent = contato.name
             containerTexto.appendChild(nomeContato)
             
-            if (contato.description) {
-                const descricao = criarElemento('div', 'contact-desc')
-                descricao.textContent = contato.description
-                containerTexto.appendChild(descricao)
-            }
+            const descricao = criarElemento('div', 'contact-desc')
+            descricao.textContent = contato.description || 'Sem descrição'
+            containerTexto.appendChild(descricao)
             
             containerContato.appendChild(containerTexto)
             itemContato.appendChild(containerContato)
@@ -72,10 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function selecionarContato(contato) {
         try {
-            contatoAtual = contato
             cabecalhoChat.textContent = contato.name
             
-            const resposta = await fetch(`${URL_BASE}/conversas?numero=${MEU_NUMERO}&contato=${encodeURIComponent(contato.name)}`)
+            const resposta = await fetch(`https://giovanna-whatsapp.onrender.com/v1/whatsapp/conversas?numero=11987876567&contato=${encodeURIComponent(contato.name)}`)
             
             if (!resposta.ok) {
                 throw new Error(`Erro HTTP: ${resposta.status}`)
@@ -84,34 +73,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const dados = await resposta.json()
             
             if (!dados.conversas || dados.conversas.length === 0) {
-                exibirMensagens([])
                 return
             }
             
             const conversa = dados.conversas.find(c => c.name === contato.name)
             exibirMensagens(conversa ? conversa.conversas : [])
         } catch (erro) {
-            console.error('Erro ao carregar mensagens:', erro)
-            const elementoErro = criarElemento('div', 'error')
-            elementoErro.textContent = 'Erro ao carregar mensagens. Verifique o console.'
-            areaMensagens.appendChild(elementoErro)
+          return false
         }
     }
     
     function exibirMensagens(mensagens) {
-        while (areaMensagens.firstChild) {
-            areaMensagens.removeChild(areaMensagens.firstChild)
-        }
-        
-        if (!mensagens || mensagens.length === 0) {
-            const mensagemVazia = criarElemento('div', 'empty-message')
-            mensagemVazia.textContent = 'Nenhuma mensagem ainda'
-            areaMensagens.appendChild(mensagemVazia)
-            return
-        }
+        areaMensagens.innerHTML = ''
         
         mensagens.forEach(msg => {
-            const enviada = msg.sender === 'me' || msg.sender === MEU_NUMERO
+            const enviada = msg.sender === 'me' || msg.sender === '11987876567'
             const elementoMensagem = criarElemento('div', `message ${enviada ? 'sent' : 'received'}`)
             
             const conteudoMensagem = criarElemento('div', 'message-content')
@@ -126,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         areaMensagens.scrollTop = areaMensagens.scrollHeight
     }
-    
     
     carregarContatos()
 })
